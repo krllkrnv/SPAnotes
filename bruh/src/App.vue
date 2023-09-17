@@ -1,14 +1,14 @@
 <template>
   <div class="app">
     <v-app>
-      <task-item></task-item>
+      <main-page></main-page>
     </v-app>
   </div>
 </template>
 
 <script>
-import taskItem from "@/components/taskItem";
+import mainPage from "@/pages/mainPage";
 export default {
-  components: {taskItem}
+  components: {mainPage}
 }
 //</script>

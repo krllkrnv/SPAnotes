@@ -1,7 +1,8 @@
 <template>
-  <div v-for="subtask in subtasks">
+  <div v-for="(item, index) in subtasks">
     <sub-task-item
-      :subtask='subtask'
+      :index="index"
+      :subtask='item'
     ></sub-task-item>
   </div>
 </template>
@@ -9,10 +10,10 @@
  I think I can change that later.
  -->
 <script>
-import SubTaskItem from "@/App.vue";
+import subTaskItem from "@/components/subTaskItem";
 
 export default {
-  components: {SubTaskItem},
+  components: {subTaskItem},
   props: {
     subtasks: Array,
     required: true
