@@ -1,29 +1,32 @@
 <template>
   <div class="dialog" v-if="show" @click.stop="hideDialog">
     <div @click.stop class="dialog__content">
-      <slot><add-task-form></add-task-form>
-      </slot>
+      <slot><add-task-form></add-task-form></slot>
     </div>
   </div>
 </template>
 
 <script>
 import addTaskForm from '@/components/addTaskForm.vue';
+import {mapGetters} from "vuex";
 export default {
   components:{
     addTaskForm
   },
   name: 'dialogWindow',
-  props: {
-    show: {
-      type: Boolean,
-      default: false
+data(){
+    return{
+      show: this.$store.getters.GET_ADD_TASK_DIALOGUE_STATUS
     }
-  },
+},
   methods: {
     hideDialog(){
-      this.$emit('update:show', false)
+      this.$store.commit('SET_ADD_TASK_DIALOGUE_STATUS');
+      this.show = this.$store.getters.GET_ADD_TASK_DIALOGUE_STATUS
     }
+  },
+  computed: {
+    ...mapGetters(['GET_ADD_TASK_DIALOGUE_STATUS']),
   }
 }
 </script>
@@ -40,12 +43,13 @@ export default {
   justify-content: center;
   align-items: center;
   z-index: 1000; /* Установите высокий z-index */
+
 }
 .dialog__content{
   margin: auto;
   background: white;
   border-radius: 5px;
   min-height: 50px;
-  min-width: 300px;
+  min-width: 500px;
 }
 </style>

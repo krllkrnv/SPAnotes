@@ -4,30 +4,42 @@
       <div class="ma-1 pa-1">
         Список заданий
       </div>
-      <v-btn prepend-icon="$plus" class="mr-2" color="surface-variant" @click="showDialog(true)">Добавить</v-btn>
-      <v-btn prepend-icon="$edit" class="mr-2" color="surface-variant" @click="showDialog(true)">Изменить</v-btn>
-      <v-btn prepend-icon="$delete" color="surface-variant" @click="showDialog(true)">Удалить</v-btn>
+      <v-btn prepend-icon="$plus" class="mr-2" color="surface-variant" @click="showDialog">Добавить</v-btn>
+      <v-btn prepend-icon="$edit" class="mr-2" color="surface-variant" @click="showDialog">Изменить</v-btn>
+      <v-btn prepend-icon="$delete" color="surface-variant" @click="showDialog">Удалить</v-btn>
     </v-container>
 
-    <dialog-window v-model:show="dialogVisible"></dialog-window>
+    <dialog-window v-if="dialogVisible"></dialog-window>
   </div>
 </template>
 <script>
-import DialogWindow from './DialogWindow.vue'; // Импортируйте компонент dialogWindow
+import DialogWindow from './DialogWindow.vue';
+import { mapGetters } from "vuex";
 
 export default {
   components: {
-    DialogWindow // Зарегистрируйте компонент dialogWindow
+    DialogWindow
   },
   data() {
     return {
-      dialogVisible: false
+      dialogVisible: false,
     };
   },
-  methods: {
-    showDialog(value) {
-      this.dialogVisible = value;
+  watch: {
+    '$store.getters.GET_ADD_TASK_DIALOGUE_STATUS': function (newVal) {
+      this.dialogVisible = newVal;
     }
+  },
+  methods: {
+    showDialog() {
+      this.$store.commit('SET_ADD_TASK_DIALOGUE_STATUS');
+    },
+    hideDialog() {
+      this.$store.commit('SET_ADD_TASK_DIALOGUE_STATUS');
+    }
+  },
+  computed: {
+    ...mapGetters(['GET_ADD_TASK_DIALOGUE_STATUS']),
   }
 };
 </script>
