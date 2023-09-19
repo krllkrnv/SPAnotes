@@ -4,39 +4,34 @@
       <div class="ma-1 pa-1">
         Список заданий
       </div>
-      <v-btn prepend-icon="$plus" class="mr-2" color="surface-variant" @click="showDialog">Добавить</v-btn>
-      <v-btn prepend-icon="$edit" class="mr-2" color="surface-variant" @click="showDialog">Изменить</v-btn>
-      <v-btn prepend-icon="$delete" color="surface-variant" @click="showDialog">Удалить</v-btn>
+      <v-btn class="mr-2" color="surface-variant" prepend-icon="$plus" @click="showDialog">Добавить</v-btn>
+      <v-btn class="mr-2" color="surface-variant" prepend-icon="$edit" @click="showEditButtons">Изменить</v-btn>
+      <v-btn color="surface-variant" prepend-icon="$delete" @click="showDeleteButtons">Удалить</v-btn>
     </v-container>
-
-    <dialog-window v-if="dialogVisible"></dialog-window>
   </div>
 </template>
 <script>
-import DialogWindow from './DialogWindow.vue';
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
-  components: {
-    DialogWindow
-  },
-  data() {
-    return {
-      dialogVisible: false,
-    };
-  },
-  watch: {
-    '$store.getters.GET_ADD_TASK_DIALOGUE_STATUS': function (newVal) {
-      this.dialogVisible = newVal;
-    }
-  },
   methods: {
     showDialog() {
       this.$store.commit('SET_ADD_TASK_DIALOGUE_STATUS');
+      this.$store.commit('SET_EDIT_TASK_DIALOGUE_STATUS_FALSE');
+      this.$store.commit('SET_DELETE_TASK_DIALOGUE_STATUS_FALSE');
     },
     hideDialog() {
       this.$store.commit('SET_ADD_TASK_DIALOGUE_STATUS');
-    }
+      this.showAdd = this.$store.getters.GET_ADD_TASK_DIALOGUE_STATUS
+    },
+    showEditButtons() {
+      this.$store.commit('SET_EDIT_TASK_DIALOGUE_STATUS')
+      this.$store.commit('SET_DELETE_TASK_DIALOGUE_STATUS_FALSE');
+    },
+    showDeleteButtons() {
+      this.$store.commit('SET_DELETE_TASK_DIALOGUE_STATUS')
+      this.$store.commit('SET_EDIT_TASK_DIALOGUE_STATUS_FALSE');
+    },
   },
   computed: {
     ...mapGetters(['GET_ADD_TASK_DIALOGUE_STATUS']),

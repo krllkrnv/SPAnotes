@@ -1,15 +1,9 @@
-<!--
- subtaskItem: [
- name: ...,
- status: boolean,
- ]
- -->
 <template>
   <div class="subtask">
-<v-checkbox  class="ma-0 pa-0" hide-details="true"
-    on disabled
-  v-model="subtask.status"
-  :label="`${index + 1}. ${subtask.name}`"></v-checkbox>
+    <v-checkbox v-model="subtask.status" :label="`${index + 1}. ${subtask.name}`"
+                class="ma-0 pa-0" disabled
+                hide-details="true"
+                on></v-checkbox>
   </div>
 </template>
 

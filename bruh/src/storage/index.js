@@ -22,7 +22,7 @@ export default createStore({
             status: true
           }
         ]
-      },{
+      }, {
         name: 'HIII!!!!!!!!!!',
         subtasks: [
           {
@@ -57,24 +57,36 @@ export default createStore({
       return state.showAddTaskDialogue
     },
     GET_EDIT_TASK_DIALOGUE_STATUS: state => {
-      return state.showEditTaskDialogueTaskDialogue
+      return state.showEditTaskDialogue
     },
     GET_DELETE_TASK_DIALOGUE_STATUS: state => {
-      return state.showDeleteTaskDialogueTaskDialogue
+      return state.showDeleteTaskDialogue
     }
   },
   mutations: {
     SET_TASKS: (state, payload) => {
       state.tasks.push(payload);
     },
+    DEL_TASK: (state, payload) => {
+      state.tasks.splice(payload, 1);
+    },
     SET_ADD_TASK_DIALOGUE_STATUS: (state) => {
       state.showAddTaskDialogue = !state.showAddTaskDialogue
     },
     SET_EDIT_TASK_DIALOGUE_STATUS: (state) => {
-      state.showEditTaskDialogueTaskDialogue = !state.showEditTaskDialogueTaskDialogue
+      state.showEditTaskDialogue = !state.showEditTaskDialogue
     },
     SET_DELETE_TASK_DIALOGUE_STATUS: (state) => {
-      state.showDeleteTaskDialogueTaskDialogue = !state.showDeleteTaskDialogueTaskDialogue
-    }
+      state.showDeleteTaskDialogue = !state.showDeleteTaskDialogue
+    },
+    SET_ADD_TASK_DIALOGUE_STATUS_FALSE: (state) => {
+      state.showAddTaskDialogue = false
+    },
+    SET_EDIT_TASK_DIALOGUE_STATUS_FALSE: (state) => {
+      state.showEditTaskDialogue = false
+    },
+    SET_DELETE_TASK_DIALOGUE_STATUS_FALSE: (state) => {
+      state.showDeleteTaskDialogue = false
+    },
   }
 })

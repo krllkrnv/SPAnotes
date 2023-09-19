@@ -9,12 +9,13 @@
 
 <script>
 import taskItem from "@/components/taskItem";
+
 export default {
   components: {taskItem},
   props: {
     tasks: Array,
     required: true
-  }
+  },
 }
 </script>
 

@@ -8,6 +8,7 @@
 
 <script>
 import mainPage from "@/pages/mainPage";
+
 export default {
   components: {mainPage}
 }
