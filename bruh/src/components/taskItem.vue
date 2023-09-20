@@ -1,47 +1,28 @@
-<!-- БРАТАНЧИК РАЗНЕСИ КНОПКИ ПО КОМПОНЕНТАМ. МОЖНО СДЕЛАТЬ ПАПКУ UI
-     ОЧЕНЬ МНОГО КОДА И ЛОГИКИ
- -->
-
 <template>
   <div>
     <v-row align="top" no-gutters>
       <v-col>
         <v-sheet class="rounded" style="height: 100%;">{{ task.name }}</v-sheet>
       </v-col>
-      <v-divider
-        :thickness="10"
-        color="grey-lighten-4"
-        vertical
-      ></v-divider>
+      <v-divider :thickness="10" color="grey-lighten-4" vertical></v-divider>
       <v-col>
         <v-sheet class="abc rounded d-flex flex-row" style="height: 100%;">
           <div style="flex-grow: 1;">
-            <sub-task-list :subtasks="task.subtasks"></sub-task-list>
+            <sub-task-list
+              :checkbox_status="true"
+              :subtasks="task.subtasks"></sub-task-list>
           </div>
-          <div class="align-self-start">
-            <v-btn
-              v-show="deleteButtonVisible"
-              class="pulse-button"
-              color="error"
-              icon="$delete"
-              @click="dialog = true"
-            ></v-btn>
-            <v-btn
-              v-show="editButtonVisible"
-              class="pulse-button"
-              color="warning"
-              icon="$edit"
-              @click=""
-            ></v-btn>
-            <v-dialog v-model="dialog" max-width="400">
-              <v-card>
-                <v-card-title>Подтвердите удаление задачи {{ task.name }}</v-card-title>
-                <v-card-actions class="justify-center d-flex">
-                  <v-btn color="error" @click="deleteTask(task)">Удалить</v-btn>
-                  <v-btn color="primary" @click="dialog = false">Отмена</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
+          <div class="ma-1 pa-1">
+            <delete-task
+              :task="task"
+              :delete-button-visible="deleteButtonVisible"
+              @delete-task="deleteTask"
+            ></delete-task>
+            <edit-task
+              :task="task"
+              :edit-button-visible="editButtonVisible"
+              @delete-task="deleteTask"
+            ></edit-task>
           </div>
         </v-sheet>
       </v-col>
@@ -51,43 +32,43 @@
 
 <script>
 import SubTaskList from "@/components/subTaskList";
-import {mapGetters} from "vuex";
+import DeleteTask from "@/components/DeleteTask";
+import { mapGetters } from "vuex";
+import EditTask from "@/components/editTask";
 
 export default {
-  components: {SubTaskList},
+  components: {EditTask, SubTaskList, DeleteTask },
   props: {
     task: Object,
-    required: true
+    required: true,
   },
   data() {
     return {
       deleteButtonVisible: false,
-      dialog: false,
       editButtonVisible: false,
-    }
+    };
   },
   watch: {
-    '$store.getters.GET_DELETE_TASK_DIALOGUE_STATUS': function (newVal) {
-      this.deleteButtonVisible = newVal
+    "$store.getters.GET_DELETE_TASK_DIALOGUE_STATUS": function (newVal) {
+      this.deleteButtonVisible = newVal;
     },
-    '$store.getters.GET_EDIT_TASK_DIALOGUE_STATUS': function (newVal) {
-      this.editButtonVisible = newVal
-    }
+    "$store.getters.GET_EDIT_TASK_DIALOGUE_STATUS": function (newVal) {
+      this.editButtonVisible = newVal;
+    },
   },
   methods: {
-    deleteTask(name) {
-      this.$store.commit('DEL_TASK', this.$store.getters.TASKS.indexOf(name));
-      this.dialog = false; // Закрываем окошко после удаления
+    deleteTask(task) {
+      this.$store.commit("DEL_TASK", this.$store.getters.TASKS.indexOf(task));
     },
   },
   computed: {
-    ...mapGetters(['GET_DELETE_TASK_DIALOGUE_STATUS']),
-    ...mapGetters(['TASKS'])
-  }
-}
+    ...mapGetters(["GET_DELETE_TASK_DIALOGUE_STATUS"]),
+    ...mapGetters(["TASKS"]),
+  },
+};
 </script>
 
-<style>
+<style scoped>
 .abc {
   align-items: stretch; /* Растянуть по высоте */
   max-height: 175px; /* Начальная максимальная высота (скроет текст) */
@@ -99,24 +80,4 @@ export default {
   max-height: 500px; /* Максимальная высота при наведении (развернет текст) */
 }
 
-.pulse-button {
-  animation: pulse 1s infinite;
-}
-
-.align-self-start {
-  margin-top: 8px;
-  margin-right: 8px;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container class="bg-blue-grey-lighten-4 rounded align-self-center mb-4">
-      <div class="ma-1 pa-1">
+      <div class="header">
         Список заданий
       </div>
       <v-btn class="mr-2" color="surface-variant" prepend-icon="$plus" @click="showDialog">Добавить</v-btn>
@@ -40,5 +40,7 @@ export default {
 </script>
 
 <style scoped>
-
+.header{
+  margin-bottom: 10px;
+}
 </style>

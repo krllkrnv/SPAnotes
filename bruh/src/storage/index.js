@@ -67,6 +67,13 @@ export default createStore({
     SET_TASKS: (state, payload) => {
       state.tasks.push(payload);
     },
+    EDIT_TASK: (state, payload) => {
+      state.tasks.forEach((item, index) => {
+        if (item.name === payload.old_elem_name) {
+          state.tasks[index] = payload.new_elem
+        }
+      })
+    },
     DEL_TASK: (state, payload) => {
       state.tasks.splice(payload, 1);
     },

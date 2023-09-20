@@ -14,7 +14,6 @@
               :rules="rules"
               label="Название подзадачи"
             ></v-text-field>
-
             <div class="d-flex align-center">
               <v-checkbox v-model="subtask.status" label="Выполнено"></v-checkbox>
               <v-spacer></v-spacer>

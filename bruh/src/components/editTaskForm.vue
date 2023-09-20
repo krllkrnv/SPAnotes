@@ -1,56 +1,52 @@
 <!-- НАДО ПЕРЕДЕЛАТЬ ПОД ИЗМЕНЕНИЕ ЗАДАЧИ -->
 
 <template>
-  <div>
-    <v-form @submit.prevent="pushToStorage">
+  <div class="scrollable-container">
+  <v-form @submit.prevent="submitChange" class="scrollable-form">
+        Задание:
       <v-text-field
-        v-model="task.name"
+        v-model="form_task.name"
         :rules="rules"
-        label="Название задачи"
       ></v-text-field>
-      <div v-for="(subtask, index) in task.subtasks" :key="index">
-        <v-card class="mb-2">
-          <v-card-text>
-            <v-text-field
-              v-model="subtask.name"
-              :rules="rules"
-              label="Название подзадачи"
-            ></v-text-field>
-
-            <div class="d-flex align-center">
-              <v-checkbox v-model="subtask.status" label="Выполнено"></v-checkbox>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="error"
-                prepend-icon="$delete"
-                @click="deleteSubtask(index)"
-              >Удалить
-              </v-btn>
-            </div>
-          </v-card-text>
-        </v-card>
-      </div>
-      <v-btn block class="mt-2" @click="addSubtask">Добавить подзадачу</v-btn>
-      <v-btn block class="mt-2" type="submit">Добавить задачу</v-btn>
+        Список задач:
+      <v-btn  @click="addSubtask" icon="$plus" color="green" class="ma-2 pa-"></v-btn>
+      <v-btn  @click="changeShowDelBtn" icon="$error" color="red" class="ma-2 pa-2"></v-btn>
+    <table class="centered-table" style="margin-right: 20px;"> <!-- Добавляем отступ слева (примерно 20px) -->
+      <tr>
+        <th>Статус</th>
+        <th>Название</th>
+      </tr>
+      <tr v-for="(item, index) in form_task.subtasks">
+        <td><v-checkbox v-model="item.status" label="Выполнено"></v-checkbox></td>
+        <td><v-text-field v-model="item.name"></v-text-field></td>
+        <v-btn :style="{ visibility: showDelBtn ? 'visible' : 'hidden' }" color="error" icon="$error" @click="deleteSubtask(index)" class="delete-button"></v-btn>
+      </tr>
+    </table>
+      <v-btn block class="mt-2" type="submit">Изменить задачу</v-btn>
     </v-form>
   </div>
 </template>
 
 <script>
+import subTaskList from "@/components/subTaskList";
 export default {
+  components: {
+    subTaskList
+  },
   data() {
     return {
       form_task: {
-        name: '',
-        subtasks: []
+        name: this.task.name,
+        subtasks: JSON.parse(JSON.stringify(this.task.subtasks))
       },
       rules: [
         value => {
           if (value) return true
-
           return 'Введите название задачи'
         },
-      ]
+      ],
+      history: [],
+      showDelBtn: false// история изменений. Просто при каждом пуке пушим объект.
     }
   },
   props: {
@@ -59,28 +55,62 @@ export default {
   },
   methods: {
     pushToStorage() {
-      if (this.task.name && this.task.subtasks.length >= 1) {
-        this.$store.commit('SET_TASKS', this.task)
-        this.task = {
-          name: '',
-          subtasks: []
-        }
-        this.$store.commit('SET_ADD_TASK_DIALOGUE_STATUS');
-      }
+
+    },
+    pushToHistory(){
+      this.history.push(this.form_task)
     },
     addSubtask() {
-      this.task.subtasks.push({
+      this.form_task.subtasks.push({
         name: '',
         status: false
       })
     },
     deleteSubtask(index) {
-      this.task.subtasks.splice(index, 1)
+      this.form_task.subtasks.splice(index, 1)
+    },
+    submitChange(){
+      this.$store.commit('EDIT_TASK', {old_elem_name: this.task.name, new_elem: this.form_task})
+    },
+    changeShowDelBtn(){
+      this.showDelBtn = !this.showDelBtn
     }
   }
 }
 </script>
 
 <style scoped>
+.scrollable-container {
+  max-height: 650px; /* Максимальная высота контейнера, после которой он начнет прокручиваться */
+  overflow-y: auto; /* Добавляем вертикальную прокрутку при необходимости */
+}
 
+.scrollable-form {
+  padding: 20px; /* Добавьте отступы, если необходимо */
+}
+
+.scrollable-container::-webkit-scrollbar {
+  width: 0.5em; /* Ширина ползунка */
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+th{
+  font-weight: normal;
+  text-align: center;
+}
+.centered-table {
+  margin: 0 auto;
+  width: 80%;
+  border-collapse: collapse;
+}
+
+.centered-table th, .centered-table td {
+  padding: 10px; /* Отступы между содержимым ячеек */
+  text-align: left; /* Выравнивание текста в ячейках */
+}
+.delete-button {
+  margin-top: 10px;
+}
 </style>

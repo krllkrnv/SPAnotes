@@ -7,17 +7,15 @@
 </template>
 
 <script>
-import addTaskForm from '@/components/addTaskForm.vue';
 import {mapGetters} from "vuex";
-
 export default {
-  components: {
-    addTaskForm
-  },
   name: 'dialogWindow',
   methods: {
     hideDialog() {
-      this.$store.commit('SET_ADD_TASK_DIALOGUE_STATUS');
+      this.$store.commit('SET_ADD_TASK_DIALOGUE_STATUS_FALSE');
+      this.$store.commit('SET_EDIT_TASK_DIALOGUE_STATUS_FALSE');
+      this.$store.commit('SET_DELETE_TASK_DIALOGUE_STATUS_FALSE');
+
     }
   },
   computed: {
