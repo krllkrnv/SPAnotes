@@ -2,6 +2,7 @@ import {createStore} from "vuex"
 import axios from 'axios';
 const graphqlUrl = 'http://localhost:4000/';
 import createPersistedState from 'vuex-persistedstate'
+
 export default createStore({
 
   state: {

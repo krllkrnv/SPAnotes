@@ -2,7 +2,7 @@
   <div>
     <v-row align="top" no-gutters>
       <v-col>
-        <v-sheet class="rounded" style="height: 100%;">{{ task.name }}</v-sheet>
+        <v-sheet class="rounded" style="height: 100%;"><div class="pa-3">{{ task.name }}</div></v-sheet>
       </v-col>
       <v-divider :thickness="10" color="grey-lighten-4" vertical></v-divider>
       <v-col>
