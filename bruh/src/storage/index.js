@@ -1,53 +1,14 @@
 import {createStore} from "vuex"
-
+import axios from 'axios';
+const graphqlUrl = 'http://localhost:4000/';
+import createPersistedState from 'vuex-persistedstate'
 export default createStore({
+
   state: {
     showAddTaskDialogue: false,
     showEditTaskDialogue: false,
     showDeleteTaskDialogue: false,
-    tasks: [
-      {
-        name: 123,
-        subtasks: [
-          {
-            name: 'heyy!!!',
-            status: true
-          },
-          {
-            name: 'addfs',
-            status: false
-          },
-          {
-            name: 'a',
-            status: true
-          }
-        ]
-      }, {
-        name: 'HIII!!!!!!!!!!',
-        subtasks: [
-          {
-            name: 'aaaa!!!',
-            status: false
-          },
-          {
-            name: 'adfdsfdsfdfs',
-            status: true
-          },
-          {
-            name: 'a',
-            status: true
-          },
-          {
-            name: 'aa',
-            status: true
-          },
-          {
-            name: 'bb',
-            status: false
-          }
-        ]
-      }
-    ],
+    tasks: [],
   },
   getters: {
     TASKS: state => {
@@ -95,5 +56,39 @@ export default createStore({
     SET_DELETE_TASK_DIALOGUE_STATUS_FALSE: (state) => {
       state.showDeleteTaskDialogue = false
     },
-  }
+    SET_MOCKED_TASKS: (state, payload) => {
+      state.tasks = payload
+    }
+  },
+  actions: {
+    MOCK_AND_SET:  ({commit, getters}) => {
+      if (getters.TASKS.length === 0) {
+      const query = `
+        {
+          tasks {
+            name
+            subtasks {
+              name
+              status
+            }
+          }
+        }
+      `;
+
+      return axios
+        .post(graphqlUrl, {query})
+        .then((response) => {
+          const data = response.data.data;
+          commit("SET_MOCKED_TASKS", data.tasks);
+          return data.tasks;
+        })
+        .catch((error) => {
+          throw error;
+        });
+    }
+    }
+  },
+  plugins: [createPersistedState({
+    storage: window.sessionStorage,
+  })]
 })

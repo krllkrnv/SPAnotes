@@ -1,31 +1,33 @@
 <template>
-  <div class="scrollable-container">
+  <div>
     <v-form class="scrollable-form" @submit.prevent="pushToStorage">
       <v-text-field
         v-model="task.name"
         :rules="rules"
         label="Название задачи"
       ></v-text-field>
-      <div v-for="(subtask, index) in task.subtasks" :key="index">
-        <v-card class="mb-2">
-          <v-card-text>
-            <v-text-field
-              v-model="subtask.name"
-              :rules="rules"
-              label="Название подзадачи"
-            ></v-text-field>
-            <div class="d-flex align-center">
-              <v-checkbox v-model="subtask.status" label="Выполнено"></v-checkbox>
-              <v-spacer></v-spacer>
-              <v-btn
-                color="error"
-                prepend-icon="$delete"
-                @click="deleteSubtask(index)"
-              >Удалить
-              </v-btn>
-            </div>
-          </v-card-text>
-        </v-card>
+      <div class="scrollable-container">
+        <div v-for="(subtask, index) in task.subtasks" :key="index">
+          <v-card class="mb-2">
+            <v-card-text>
+              <v-text-field
+                v-model="subtask.name"
+                :rules="rules"
+                label="Название подзадачи"
+              ></v-text-field>
+              <div class="d-flex align-center">
+                <v-checkbox v-model="subtask.status" label="Выполнено"></v-checkbox>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="error"
+                  prepend-icon="$delete"
+                  @click="deleteSubtask(index)"
+                >Удалить
+                </v-btn>
+              </div>
+            </v-card-text>
+          </v-card>
+        </div>
       </div>
       <v-btn block class="mt-2" @click="addSubtask">Добавить подзадачу</v-btn>
       <v-btn block class="mt-2" type="submit">Добавить задачу</v-btn>
@@ -74,21 +76,23 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
 .scrollable-container {
-  max-height: 650px; /* Максимальная высота контейнера, после которой он начнет прокручиваться */
-  overflow-y: auto; /* Добавляем вертикальную прокрутку при необходимости */
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 20px;
+  min-height: 400px;
 }
 
 .scrollable-form {
-  padding: 20px; /* Добавьте отступы, если необходимо */
+  padding: 20px;
 }
 
 .scrollable-container::-webkit-scrollbar {
-  width: 0.5em; /* Ширина ползунка */
+  width: 0.5em;
 }
 
 .scrollable-container::-webkit-scrollbar-thumb {
-  background-color: transparent; /* Цвет ползунка */
+  background-color: transparent;
 }
 </style>

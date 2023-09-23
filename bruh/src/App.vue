@@ -10,6 +10,9 @@
 import mainPage from "@/pages/mainPage";
 
 export default {
-  components: {mainPage}
+  components: {mainPage},
+  created() {
+    this.$store.dispatch('MOCK_AND_SET')
+  }
 }
 //</script>
