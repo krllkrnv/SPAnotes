@@ -1,6 +1,10 @@
+<!--
+  Задача
+ -->
+
 <template>
   <div>
-    <v-row align="top" no-gutters>
+    <v-row no-gutters>
       <v-col>
         <v-sheet class="rounded" style="height: 100%;"><div class="pa-3">{{ task.name }}</div></v-sheet>
       </v-col>
@@ -10,19 +14,19 @@
           <div style="flex-grow: 1;">
             <sub-task-list
               :checkbox_status="true"
-              :subtasks="task.subtasks"></sub-task-list>
+              :subtasks="task.subtasks"/>
           </div>
           <div class="ma-1 pa-1">
             <delete-task
               :task="task"
               :delete-button-visible="deleteButtonVisible"
               @delete-task="deleteTask"
-            ></delete-task>
+            />
             <edit-task
               :task="task"
               :edit-button-visible="editButtonVisible"
               @delete-task="deleteTask"
-            ></edit-task>
+            />
           </div>
         </v-sheet>
       </v-col>
@@ -62,22 +66,20 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["GET_DELETE_TASK_DIALOGUE_STATUS"]),
-    ...mapGetters(["TASKS"]),
+    ...mapGetters(["GET_DELETE_TASK_DIALOGUE_STATUS", "TASKS"]),
   },
 };
 </script>
 
 <style scoped>
 .abc {
-  align-items: stretch; /* Растянуть по высоте */
-  max-height: 175px; /* Начальная максимальная высота (скроет текст) */
-  overflow: hidden; /* Скроет текст, который не помещается в максимальную высоту */
-  transition: max-height 0.5s ease-in-out; /* Плавная анимация для свойства max-height */
+  align-items: stretch;
+  max-height: 175px;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
 }
 
 .abc:hover {
-  max-height: 500px; /* Максимальная высота при наведении (развернет текст) */
+  max-height: 500px;
 }
-
 </style>

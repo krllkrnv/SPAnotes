@@ -1,7 +1,11 @@
+<!--
+  Диалоговое окно
+ -->
+
 <template>
   <div class="dialog" @click.stop="hideDialog">
     <div class="dialog__content" @click.stop>
-      <slot></slot>
+      <slot/>
     </div>
   </div>
 </template>

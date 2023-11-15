@@ -1,3 +1,7 @@
+<!--
+ Добавление задачи
+ -->
+
 <template>
   <div>
     <v-form class="scrollable-form" @submit.prevent="pushToStorage">
@@ -5,7 +9,7 @@
         v-model="task.name"
         :rules="rules"
         label="Название задачи"
-      ></v-text-field>
+      />
       <div class="scrollable-container">
         <div v-for="(subtask, index) in task.subtasks" :key="index">
           <v-card class="mb-2">
@@ -14,10 +18,10 @@
                 v-model="subtask.name"
                 :rules="rules"
                 label="Название подзадачи"
-              ></v-text-field>
+              />
               <div class="d-flex align-center">
-                <v-checkbox v-model="subtask.status" label="Выполнено"></v-checkbox>
-                <v-spacer></v-spacer>
+                <v-checkbox v-model="subtask.status" label="Выполнено"/>
+                <v-spacer/>
                 <v-btn
                   color="error"
                   prepend-icon="$delete"
@@ -46,7 +50,6 @@ export default {
       rules: [
         value => {
           if (value) return true
-
           return 'Введите название задачи'
         },
       ]
@@ -87,7 +90,7 @@ export default {
 .scrollable-form {
   padding: 20px;
 }
-
+// Убираю ползунок прокрутки
 .scrollable-container::-webkit-scrollbar {
   width: 0.5em;
 }

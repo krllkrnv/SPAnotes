@@ -1,10 +1,14 @@
+<!--
+  Список подзадач
+ -->
+
 <template>
   <div v-for="(item, index) in subtasks">
     <sub-task-item
       :disabled-checkbox="checkbox_status"
       :index="index"
       :subtask='item'
-    ></sub-task-item>
+    />
   </div>
 </template>
 
@@ -20,7 +24,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

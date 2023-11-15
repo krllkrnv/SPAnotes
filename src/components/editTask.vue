@@ -1,3 +1,7 @@
+<!--
+  Окно редактирования задания
+ -->
+
 <template>
   <div>
     <v-btn
@@ -6,11 +10,11 @@
       color="warning"
       icon="$edit"
       @click="showDeleteDialog"
-    ></v-btn>
+    />
     <v-dialog v-model="dialog" max-width="800">
       <v-card>
         <v-card-title>Редактирование задания</v-card-title>
-        <edit-task-form :task="task"></edit-task-form>
+        <edit-task-form :task="task"/>
       </v-card>
     </v-dialog>
   </div>

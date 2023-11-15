@@ -1,12 +1,14 @@
 <template>
   <div>
-    <tool-bar class="mt-4"></tool-bar>
-    <dialog-window v-if="dialogVisible">
-      <add-task-form v-if="dialogVisible"></add-task-form>
+    <tool-bar
+      class="mt-4"/>
+    <dialog-window
+      v-if="dialogVisible">
+      <add-task-form
+        v-if="dialogVisible"/>
     </dialog-window>
-
     <task-list
-      :tasks="TASKS"></task-list>
+      :tasks="TASKS"/>
   </div>
 </template>
 
@@ -31,14 +33,9 @@ export default {
   },
   components: {taskList, toolBar, dialogWindow, addTaskForm},
   computed: {
-    ...mapGetters(['TASKS']),
-    ...mapGetters(['GET_ADD_TASK_DIALOGUE_STATUS']),
-
+    ...mapGetters(['TASKS', 'GET_ADD_TASK_DIALOGUE_STATUS']),
   },
 
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>

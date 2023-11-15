@@ -1,3 +1,7 @@
+<!--
+  Окно редактирования задания
+ -->
+
 <template>
   <div>
     <v-form @submit.prevent="submitChange" class="scrollable-form">
@@ -6,10 +10,10 @@
         @input="pushToHistoryWithDelay"
         v-model="form_task.name"
         :rules="rules"
-      ></v-text-field>
+      />
       Список задач:
-      <v-btn @click="addSubtask" icon="$plus" color="green" class="ma-2 pa-"></v-btn>
-      <v-btn @click="changeShowDelBtn" icon="$error" color="red" class="ma-2 pa-2"></v-btn>
+      <v-btn @click="addSubtask" icon="$plus" color="green" class="ma-2 pa-"/>
+      <v-btn @click="changeShowDelBtn" icon="$error" color="red" class="ma-2 pa-2"/>
       <div class="scrollable-container">
         <table
           class="centered-table">
@@ -21,21 +25,21 @@
             <td>
               <v-checkbox
                 @change="pushToHistory"
-                v-model="item.status" label="Выполнено"></v-checkbox>
+                v-model="item.status" label="Выполнено"/>
             </td>
             <td>
               <v-text-field v-model="item.name"
                             @input="pushToHistoryWithDelay"
-              ></v-text-field>
+              />
             </td>
             <v-btn
               :style="{ visibility: showDelBtn ? 'visible' : 'hidden' }" color="error" icon="$error"
-              @click="deleteSubtask(index)" class="delete-button"></v-btn>
+              @click="deleteSubtask(index)" class="delete-button"/>
           </tr>
         </table>
       </div>
-      <v-btn icon="mdi-undo" class="ma-2 pa-2" @click="undo"></v-btn>
-      <v-btn icon="mdi-redo" class="ma-2 pa-2" @click="redo"></v-btn>
+      <v-btn icon="mdi-undo" class="ma-2 pa-2" @click="undo"/>
+      <v-btn icon="mdi-redo" class="ma-2 pa-2" @click="redo"/>
       <v-btn block class="mt-2" type="submit">Изменить задачу</v-btn>
     </v-form>
   </div>
@@ -60,15 +64,18 @@ export default {
           return 'Введите название задачи'
         },
       ],
-      history: [], // история изменений. Просто при каждом пуке пушим объект.
+      // история изменений. Просто при каждом пуке пушим объект.
+      history: [],
       showDelBtn: false,
       inputTimer: 0,
       historyIndex: 0
     }
   },
   created() {
+    // сразу при инициализации компонента пушим в историю первоначальное состояние.
     this.pushToHistory()
-    this.historyIndex = this.historyIndex - 1// сразу при инициализации компонента пушим в историю первоначальное состояние.
+    // Уменьшаем индекс на 1.
+    this.historyIndex = this.historyIndex - 1
   },
   props: {
     task: Object,
@@ -76,14 +83,13 @@ export default {
   },
   methods: {
     pushToHistory() {
-      this.history.splice(this.historyIndex + 1); // для того чтобы при внесении изменения после отката удалялась лишняя история
+      // для того чтобы при внесении изменения после отката удалялась лишняя история
+      this.history.splice(this.historyIndex + 1);
       this.history.push({
         name: this.form_task.name,
         subtasks: JSON.parse(JSON.stringify(this.form_task.subtasks))
       })
       this.historyIndex = this.historyIndex + 1
-      console.table(this.history)
-      console.log(this.historyIndex)
     },
     addSubtask() {
       this.form_task.subtasks.push({
@@ -102,6 +108,7 @@ export default {
     changeShowDelBtn() {
       this.showDelBtn = !this.showDelBtn
     },
+    // Для того, чтобы при каждом новом введенном символе не пушить в массив объект. Мб можно более оптимальную задержку подобрать. Или как-то с событием focus можно поработать здесь
     pushToHistoryWithDelay() {
       if (this.inputTimer) {
         clearTimeout(this.inputTimer);
@@ -111,20 +118,18 @@ export default {
       }, 750)
     },
     undo() {
+      // Если текущий historyIndex > 0, уменьшаем его и копируем значение в текущий form_task
       if (this.historyIndex > 0) {
         this.historyIndex = this.historyIndex - 1
         this.form_task = JSON.parse(JSON.stringify(this.history[this.historyIndex]));
       }
-      console.log(this.historyIndex)
-
     },
     redo() {
+      // Аналогичные действия
       if (this.historyIndex < this.history.length - 1) {
         this.historyIndex = this.historyIndex + 1
         this.form_task = JSON.parse(JSON.stringify(this.history[this.historyIndex]));
       }
-      console.log(this.historyIndex)
-
     }
   }
 }
@@ -147,8 +152,8 @@ th {
 }
 
 .centered-table th, .centered-table td {
-  padding: 10px; /* Отступы между содержимым ячеек */
-  text-align: left; /* Выравнивание текста в ячейках */
+  padding: 10px;
+  text-align: left;
 }
 
 .delete-button {

@@ -3,7 +3,7 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import { addMocksToSchema } from '@graphql-tools/mock';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import casual from 'casual';
-
+// Наш запрос с graphql сервера
 const typeDefs = `
 type Query {
 tasks: [Task!]!
@@ -20,7 +20,8 @@ status: Boolean!
 }
 `;
 
-
+// Библиотека casual позволяет давать рандомные строки и числа.
+// Количество subtasks рандомно в указанном диапазоне.
 const mocks = {
   Task: () => ({
     name: casual.word,
@@ -34,7 +35,7 @@ const mocks = {
     status: casual.boolean,
   }),
 };
-
+// Наш сервер, откуда мы берем данные
 const server = new ApolloServer({
   schema: addMocksToSchema({
     schema: makeExecutableSchema({ typeDefs }),
@@ -44,5 +45,3 @@ const server = new ApolloServer({
 });
 
 const { url } = await startStandaloneServer(server, { listen: { port: 4000 } });
-
-console.log(`🚀 Server listening at: ${url}`);

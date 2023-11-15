@@ -1,3 +1,7 @@
+<!--
+  Кнопка добавления, редактирования и удаления
+ -->
+
 <template>
   <div>
     <v-container class="bg-blue-grey-lighten-4 rounded align-self-center mb-4">
@@ -14,6 +18,7 @@
 import {mapGetters} from "vuex";
 
 export default {
+  // При нажатии на кнопки изменяются статусы
   methods: {
     showDialog() {
       this.$store.commit('SET_ADD_TASK_DIALOGUE_STATUS');

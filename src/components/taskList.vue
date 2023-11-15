@@ -1,7 +1,11 @@
+<!--
+  Список задач
+ -->
+
 <template>
   <v-container class="bg-blue-grey-lighten-4 rounded align-self-center">
     <div v-for="task in tasks">
-      <task-item :task="task" class="pa-1"></task-item>
+      <task-item :task="task" class="pa-1"/>
     </div>
   </v-container>
 
@@ -18,7 +22,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

@@ -1,3 +1,7 @@
+<!--
+  Подзадача
+ -->
+
 <template>
   <div class="subtask">
     <v-checkbox v-model="subtask.status"
@@ -5,7 +9,7 @@
                 class="ma-0 pa-0"
                 :disabled="disabledCheckbox"
                 hide-details="true"
-                on></v-checkbox>
+                on/>
   </div>
 </template>
 
@@ -19,7 +23,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

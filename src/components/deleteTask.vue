@@ -1,3 +1,7 @@
+<!--
+ Удаление задачи
+ -->
+
 <template>
   <div>
     <v-btn
@@ -6,7 +10,7 @@
       color="error"
       icon="$delete"
       @click="showDeleteDialog"
-    ></v-btn>
+    />
     <v-dialog v-model="dialog" max-width="600">
       <v-card>
         <v-card-title class="card-title">Подтвердите удаление задачи {{ task.name }}</v-card-title>
