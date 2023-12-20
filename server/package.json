@@ -1,0 +1,19 @@
+{
+  "type": "module",
+  "name": "pseudo-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mock.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "krllkrnv",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/client": "^3.8.8",
+    "@apollo/server": "^4.9.5",
+    "@graphql-tools/mock": "^9.0.0",
+    "@graphql-tools/schema": "^10.0.2",
+    "casual": "^1.6.2"
+  }
+}
