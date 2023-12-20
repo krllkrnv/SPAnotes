@@ -1,4 +1,4 @@
-# default
+## run mock.js to generate random tasks with random subtasks, do not do this if you want to have empty task list
 
 ## Project setup
 
